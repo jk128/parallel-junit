@@ -142,11 +142,14 @@ public class ParallelTestSuite extends TestSuite {
         }
 
         public void run() {
-            Test t;
-            while((t=getNextTest())!=null) {
-                t.run(result);
+            try {
+                Test t;
+                while((t=getNextTest())!=null) {
+                    t.run(result);
+                }
+            } finally {
+                finish();
             }
-            finish();
         }
 
         /**
@@ -193,9 +196,14 @@ public class ParallelTestSuite extends TestSuite {
                     // send the accumulated method calls to the actual object
                     try {
                         recorder.replay(core);
-                    } catch (Throwable t) {
+                    } catch (RuntimeException e) {
+                        // must be a bug in the test result listener
+                        throw e;
+                    } catch(Error e) {
+                        throw e;
+                    } catch (Throwable e) {
                         // impossible
-                        t.printStackTrace();
+                        e.printStackTrace();
                         throw new InternalError();
                     }
                     recorder.clear();
