@@ -40,7 +40,7 @@ public class ParallelTestSuite extends TestSuite {
         this.nThreads = nThreads;
     }
 
-    public ParallelTestSuite(final Class theClass, int nThreads) {
+    public ParallelTestSuite(Class theClass, int nThreads) {
         super(theClass);
         this.nThreads = nThreads;
     }
@@ -58,7 +58,7 @@ public class ParallelTestSuite extends TestSuite {
         this(theClass, name, defaultThreadSize());
     }
 
-    public ParallelTestSuite(final Class theClass) {
+    public ParallelTestSuite(Class theClass) {
         this(theClass, defaultThreadSize());
     }
 
@@ -186,13 +186,18 @@ public class ParallelTestSuite extends TestSuite {
 
             public void startTest(Test test) {
                 super.startTest(test);
-                recorderProxy.startTest(test);
             }
 
             public void endTest(Test test) {
                 super.endTest(test);
 
                 synchronized(ParallelTestSuite.this) {
+                    core.startTest(test);
+
+                    // send the output
+                    out.purge();
+                    err.purge();
+
                     // send the accumulated method calls to the actual object
                     try {
                         recorder.replay(core);
@@ -207,10 +212,6 @@ public class ParallelTestSuite extends TestSuite {
                         throw new InternalError();
                     }
                     recorder.clear();
-
-                    // send the output
-                    out.purge();
-                    err.purge();
 
                     core.endTest(test);
                 }
