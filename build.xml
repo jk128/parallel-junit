@@ -15,7 +15,13 @@
 			<fileset dir="." includes="LICENSE.txt"/>
 		</jar>
 	</target>
-	
+
+  <target name="src-zip">
+    <zip file="build/parallel-junit.src.zip">
+      <fileset dir="src" defaultexcludes="no" /> 
+    </zip>
+  </target>
+
 	<target name="clean">
 		<delete dir="build"/>
 	</target>
