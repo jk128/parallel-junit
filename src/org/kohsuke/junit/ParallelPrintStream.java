@@ -1,8 +1,11 @@
 package org.kohsuke.junit;
 
-import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * {@link PrintStream} that handles concurrent access from
@@ -37,20 +40,24 @@ class ParallelPrintStream extends PrintStream {
     }
 
     /**
-     * Maintain a buffer for each thread.
+     * Maintain a buffer for each thread group.
      */
-    private ThreadLocal buffer = new ThreadLocal() {
-        protected Object initialValue() {
-            return new Streams();
-        }
-    };
+    private final Map/*<WorkerThreadGroup,Streams>*/ buffer = Collections.synchronizedMap(new HashMap());
 
     public PrintStream getBase() {
         return base;
     }
 
     private Streams getStreams() {
-        return (Streams)buffer.get();
+        ThreadGroup tg;
+        for( tg = Thread.currentThread().getThreadGroup(); tg!=null && !(tg instanceof WorkerThreadGroup); tg=tg.getParent() )
+            ;
+
+        Streams s = (Streams)buffer.get(tg);
+        if(s==null)
+            buffer.put(tg,s = new Streams());
+
+        return s;
     }
 
     private PrintStream out() {

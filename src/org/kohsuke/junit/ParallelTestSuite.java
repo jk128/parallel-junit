@@ -96,7 +96,7 @@ public class ParallelTestSuite extends TestSuite {
                 });
 
             for( int i=0; i<nThreads; i++ )
-                new WorkerThread( (TestListener)tm.getProxy() ).start();
+                new WorkerThread( i, (TestListener)tm.getProxy() ).start();
 
             tm.run(); // blocks until all the worker threads are finished,
         } finally {
@@ -137,7 +137,8 @@ public class ParallelTestSuite extends TestSuite {
     final class WorkerThread extends Thread {
         private final TestResult result;
 
-        WorkerThread(TestListener listener) {
+        WorkerThread(int id,TestListener listener) {
+            super(new WorkerThreadGroup(id),"WorkerThread-"+id);
             this.result = new ProxyTestResult(listener);
         }
 
