@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="parallel-junit" default="jar">
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes" debug="on">
+			<classpath>
+				<fileset dir="lib" includes="*.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="clean,compile">
+		<jar destfile="build/parallel-junit.jar">
+			<fileset dir="build/classes"/>
+			<fileset dir="." includes="LICENSE.txt"/>
+		</jar>
+	</target>
+	
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+</project>
