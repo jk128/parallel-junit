@@ -73,7 +73,7 @@ public class ParallelTestSuite extends TestSuite {
         System.setErr(err);
 
         try {
-            // this thread marshaller serialies the calls from multiple threads
+            // this thread marshaller serializes the calls from multiple threads
             // into the main thread.
             tm = new ThreadMarshaller(
                 TestListener.class,
@@ -95,8 +95,11 @@ public class ParallelTestSuite extends TestSuite {
                     }
                 });
 
-            for( int i=0; i<nThreads; i++ )
-                new WorkerThread( i, (TestListener)tm.getProxy() ).start();
+            // prevent nThreads from getting modified while we create threads 
+            synchronized (this) {
+                for( int i=0; i<nThreads; i++ )
+                    new WorkerThread( i, (TestListener)tm.getProxy() ).start();
+            }
 
             tm.run(); // blocks until all the worker threads are finished,
         } finally {
