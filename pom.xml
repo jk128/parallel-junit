@@ -9,7 +9,7 @@
 
   <scm>
     <connection>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</connection>
-    <developerConnection>scm:cvs:pserver:cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</developerConnection>
+    <developerConnection>scm:cvs:pserver:${user.name}@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</developerConnection>
   </scm>
   
   <distributionManagement>
