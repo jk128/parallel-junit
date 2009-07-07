@@ -2,15 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kohsuke</groupId>
   <artifactId>parallel-junit</artifactId>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
 
   <name>TestSuite run in parallel</name>
   <packaging>jar</packaging>
 
   <scm>
     <connection>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</connection>
-    <developerConnection>scm:cvs:pserver:${user.name}@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</developerConnection>
-    <tag>parallel-junit-1_1</tag>
+    <developerConnection>scm:cvs:pserver:kohsuke@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</developerConnection>
   </scm>
   
   <distributionManagement>
