@@ -7,6 +7,10 @@
   <name>TestSuite run in parallel</name>
   <packaging>jar</packaging>
 
+  <scm>
+    <connection>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</connection>
+    <developerConnection>scm:cvs:pserver:cvs.dev.java.net:/cvs:parallel-junit/parallel-junit</developerConnection>
+  </scm>
   
   <distributionManagement>
     <repository>
