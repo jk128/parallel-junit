@@ -50,10 +50,10 @@ public class ParallelSuite extends Suite{
 
 	public ParallelSuite(Class<?> klass, RunnerBuilder builder) throws InitializationError {
 		super(klass, builder);
-		nThreads = getAnnotatedClasses(klass);
+		nThreads = getNThreads(klass);
 	}
 
-	private static int getAnnotatedClasses(Class<?> klass) throws InitializationError {
+	private static int getNThreads(Class<?> klass) throws InitializationError {
 		NThreads annotation= klass.getAnnotation(NThreads.class);
 		if (annotation == null) {
 			return defaultThreadSize();
